@@ -1,0 +1,76 @@
+version: "2"
+
+run:
+  timeout: 5m
+  tests: true
+
+linters:
+  enable:
+    - errcheck
+    - staticcheck
+    - govet
+    - ineffassign
+    - gocyclo
+    - unparam
+    - unused
+    - misspell
+    - revive
+    - nolintlint
+    - goconst
+    - nakedret
+    - dupl
+
+  disable:
+    - lll
+    - gochecknoglobals
+
+linters-settings:
+  gocyclo:
+    min-complexity: 15
+  dupl:
+    threshold: 150
+  govet:
+    shadow: true
+  errcheck:
+    exclude-functions: fmt.Fprintf,fmt.Fprintln,fmt.Print,fmt.Println,fmt.Printf
+  revive:
+    severity: warning
+    rules:
+      - name: indent-error-flow
+      - name: error-naming
+      - name: blank-imports
+      - name: var-naming
+  misspell:
+    locale: US
+  nakedret:
+    max-func-lines: 50
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+
+formatters-settings:
+  gofmt:
+    simplify: false
+  goimports:
+    local-prefixes:
+      - github.com/yourorg/yourrepo
+
+issues:
+  exclude-rules:
+    - linters:
+        - golint
+      text: "should have comment or be unexported"
+    - linters:
+        - revive
+      text: "if block ends with a return statement, so drop this else and outdent its block"
+    - linters:
+        - staticcheck
+      text: "SA9003"
+  exclude:
+    - "Error return value is not checked.*(Close|Log|Print).*"
+
+output:
+  formats:
+    colored-line-number: {}
