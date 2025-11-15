@@ -6,7 +6,7 @@ type Team struct {
 }
 
 type Member struct {
-	UserID   uint   `json:"user_id" db:"user_id" binding:"required"`
+	UserID   string `json:"user_id" db:"user_id" binding:"required"`
 	UserName string `json:"username" db:"username" binding:"required"`
 	IsActive bool   `json:"is_active" db:"is_active" binding:"required"`
 }
