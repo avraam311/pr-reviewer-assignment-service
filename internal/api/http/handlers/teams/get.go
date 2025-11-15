@@ -2,10 +2,9 @@ package teams
 
 import (
 	// "errors"
-	"fmt"
 	"net/http"
 
-	"github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers"
+	"github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/responses"
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/infra/logger"
 
 	"github.com/gin-gonic/gin"
@@ -18,14 +17,14 @@ func (h *Handler) GetTeam(c *gin.Context) {
 	if err != nil {
 		// if errors.Is(err, teams.ErrTeamNotFound) {
 		// 	logger.Logger.Error().Err(err).Interface("team_name", teamName).Msg("team_name not found")
-		// 	handlers.Fail(c.Writer, http.StatusBadRequest, fmt.Errorf("team_name not found"))
+		// 	responses.ResponseError(c, responses.ErrCodeNotFound, "team_name not found", http.StatusBadRequest)
 		// 	return
 		// }
 
 		logger.Logger.Error().Err(err).Msg("failed to get team")
-		handlers.Fail(c.Writer, http.StatusInternalServerError, fmt.Errorf("internal server error"))
+		responses.ResponseError(c, responses.ErrInternalServer, "internal server error", http.StatusInternalServerError)
 		return
 	}
 
-	handlers.OK(c.Writer, team)
+	responses.ResponseOK(c, team)
 }

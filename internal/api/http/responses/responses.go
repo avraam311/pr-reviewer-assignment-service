@@ -15,6 +15,7 @@ const (
 	ErrCodeNotAssigned = "NOT_ASSIGNED"
 	ErrCodeNoCandidate = "NO_CANDIDATE"
 	ErrCodeNotFound    = "NOT_FOUND"
+	ErrInternalServer  = "INTERNAL ERROR"
 )
 
 type Success struct {
