@@ -36,14 +36,18 @@ func (r *Repository) InsertTeam(ctx context.Context, team *dto.Team) error {
 		return fmt.Errorf("repository/insert_team.go - failed to insert team - %w", err)
 	}
 
-	queryuser := `
-        INSERT INTO user (user_id, username, is_active, team_name)
-        VALUES ($1, $2, $3, $4)
-    `
+	queryUser := `
+    INSERT INTO "user" (user_id, username, is_active, team_name)
+    VALUES ($1, $2, $3, $4)
+    ON CONFLICT (user_id) DO UPDATE 
+    SET username = EXCLUDED.username,
+        is_active = EXCLUDED.is_active,
+        team_name = EXCLUDED.team_name
+`
 	for _, m := range team.Members {
-		_, err = tx.Exec(ctx, queryuser, m.UserID, m.UserName, m.IsActive, team.TeamName)
+		_, err = tx.Exec(ctx, queryUser, m.UserID, m.UserName, m.IsActive, team.TeamName)
 		if err != nil {
-			return fmt.Errorf("repository/insert_team.go - failed to insert user - %w", err)
+			return fmt.Errorf("repository/insert_team.go - failed to insert or update user - %w", err)
 		}
 	}
 
