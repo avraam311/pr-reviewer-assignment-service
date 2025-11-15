@@ -10,7 +10,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-// Zerolog is a logger type exported by the zlog package.
+// Zerolog is a logger type exported by the logger package.
 type Zerolog = zerolog.Logger
 
 // Logger is a global logger instance.
