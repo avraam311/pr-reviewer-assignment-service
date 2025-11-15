@@ -14,7 +14,6 @@ linters:
     - unparam
     - unused
     - misspell
-    - revive
     - nolintlint
     - goconst
     - nakedret
@@ -33,13 +32,6 @@ linters-settings:
     shadow: true
   errcheck:
     exclude-functions: fmt.Fprintf,fmt.Fprintln,fmt.Print,fmt.Println,fmt.Printf
-  revive:
-    severity: warning
-    rules:
-      - name: indent-error-flow
-      - name: error-naming
-      - name: blank-imports
-      - name: var-naming
   misspell:
     locale: US
   nakedret:

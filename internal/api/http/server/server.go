@@ -5,7 +5,6 @@ import (
 
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers/teams"
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/infra/config"
-
 	"github.com/gin-gonic/gin"
 )
 

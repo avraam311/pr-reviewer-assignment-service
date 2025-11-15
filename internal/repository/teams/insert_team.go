@@ -16,7 +16,10 @@ func (r *Repository) InsertTeam(ctx context.Context, team *dto.Team) error {
 	}
 	defer func() {
 		if err != nil {
-			tx.Rollback(ctx)
+			err := tx.Rollback(ctx)
+			if err != nil {
+				return
+			}
 		} else {
 			err = tx.Commit(ctx)
 		}

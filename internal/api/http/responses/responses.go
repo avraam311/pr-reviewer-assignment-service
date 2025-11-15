@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/infra/logger"
-
 	"github.com/gin-gonic/gin"
 )
 
