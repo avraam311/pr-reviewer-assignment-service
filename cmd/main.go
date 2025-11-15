@@ -9,11 +9,14 @@ import (
 	"time"
 
 	handlerTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers/teams"
+	handlerUsers "github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers/users"
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/server"
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/infra/config"
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/infra/logger"
 	repositoryTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/repository/teams"
+	repositoryUsers "github.com/avraam311/pr-reviewer-assignment-service/internal/repository/users"
 	serviceTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/usecase/teams"
+	serviceUsers "github.com/avraam311/pr-reviewer-assignment-service/internal/usecase/users"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -57,13 +60,13 @@ func main() {
 	}
 
 	repoTeams := repositoryTeams.New(pool)
-	if err != nil {
-		logger.Logger.Fatal().Err(err).Msg("failed to init teams repo")
-	}
 	srvcTeams := serviceTeams.New(repoTeams)
 	handTeams := handlerTeams.New(srvcTeams)
+	repoUsers := repositoryUsers.New(pool)
+	srvcUsers := serviceUsers.New(repoUsers)
+	handUsers := handlerUsers.New(srvcUsers)
 
-	router := server.NewRouter(cfg, handTeams)
+	router := server.NewRouter(cfg, handTeams, handUsers)
 	srv := server.NewServer(cfg.GetString("server.port"), router)
 	go func() {
 		if err := srv.ListenAndServe(); err != nil {

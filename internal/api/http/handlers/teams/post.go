@@ -16,7 +16,7 @@ func (h *Handler) AddTeam(c *gin.Context) {
 	var team dto.Team
 	if err := c.ShouldBindJSON(&team); err != nil {
 		logger.Logger.Error().Err(err).Msg("failed to decode or validate request body")
-		responses.ResponseError(c, responses.ErrCodeNotFound, fmt.Sprintf("invalid request body: %s", err.Error()), http.StatusBadRequest)
+		responses.ResponseError(c, responses.ErrInvalidJSON, fmt.Sprintf("invalid request body: %s", err.Error()), http.StatusBadRequest)
 		return
 	}
 

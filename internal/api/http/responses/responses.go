@@ -15,6 +15,7 @@ const (
 	ErrCodeNoCandidate = "NO_CANDIDATE"
 	ErrCodeNotFound    = "NOT_FOUND"
 	ErrInternalServer  = "INTERNAL ERROR"
+	ErrInvalidJSON     = "INVALID JSON"
 )
 
 type Success struct {
