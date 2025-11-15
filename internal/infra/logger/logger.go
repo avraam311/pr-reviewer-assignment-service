@@ -10,6 +10,12 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// Zerolog is a logger type exported by the zlog package.
+type Zerolog = zerolog.Logger
+
+// Logger is a global logger instance.
+var Logger Zerolog
+
 // Init initializes the global logger with output to the console and file.
 func Init() {
 	consoleWriter := zerolog.ConsoleWriter{
@@ -22,5 +28,5 @@ func Init() {
 	}
 	multi := io.MultiWriter(fileWriter, consoleWriter)
 
-	log.Logger = zerolog.New(multi).With().Timestamp().Logger()
+	Logger = zerolog.New(multi).With().Timestamp().Logger()
 }
