@@ -4,18 +4,23 @@ import (
 	"net/http"
 
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers/teams"
+	"github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers/users"
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/infra/config"
 	"github.com/gin-gonic/gin"
 )
 
-func NewRouter(cfg *config.Config, handlerTeam *teams.Handler) *gin.Engine {
+func NewRouter(cfg *config.Config, handlerTeam *teams.Handler, handlersUser *users.Handler) *gin.Engine {
 	e := gin.Default()
 
 	api := e.Group("/api/v1")
-	teamsGroup := api.Group("/team")
+	teamGroup := api.Group("/team")
 	{
-		teamsGroup.POST("/add", handlerTeam.AddTeam)
-		teamsGroup.GET("/get/:team_name", handlerTeam.GetTeam)
+		teamGroup.POST("/add", handlerTeam.AddTeam)
+		teamGroup.GET("/get/:team_name", handlerTeam.GetTeam)
+	}
+	usersGroup := api.Group("/users")
+	{
+		usersGroup.POST("/setIsActive", handlersUser.SetIsActive)
 	}
 
 	return e

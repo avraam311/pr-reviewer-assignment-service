@@ -16,8 +16,8 @@ func (h *Handler) GetTeam(c *gin.Context) {
 	team, err := h.service.GetTeam(c.Request.Context(), teamName)
 	if err != nil {
 		if errors.Is(err, teams.ErrTeamNotFound) {
-			logger.Logger.Error().Err(err).Interface("team_name", teamName).Msg("team_name not found")
-			responses.ResponseError(c, responses.ErrCodeNotFound, "team_name not found", http.StatusBadRequest)
+			logger.Logger.Error().Err(err).Interface("team_name", teamName).Msg("team.team_name not found")
+			responses.ResponseError(c, responses.ErrCodeNotFound, "team.team_name not found", http.StatusBadRequest)
 			return
 		}
 
