@@ -2,7 +2,7 @@ package dto
 
 type Team struct {
 	TeamName string  `json:"team_name" db:"team_name" binding:"required"`
-	Members  []*User `json:"users" db:"users" binding:"required,dive"`
+	Members  []*User `json:"members" db:"members" binding:"required,dive"`
 }
 
 type User struct {

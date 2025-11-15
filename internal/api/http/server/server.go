@@ -15,7 +15,7 @@ func NewRouter(cfg *config.Config, handlerTeam *teams.Handler) *gin.Engine {
 	teamsGroup := api.Group("/team")
 	{
 		teamsGroup.POST("/add", handlerTeam.AddTeam)
-		teamsGroup.GET("/get", handlerTeam.GetTeam)
+		teamsGroup.GET("/get/:team_name", handlerTeam.GetTeam)
 	}
 
 	return e
