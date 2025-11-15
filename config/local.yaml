@@ -1,0 +1,6 @@
+server:
+  port: ":8080"
+
+db:
+  max_conns: 10
+  max_conn_lifetime: 30m
