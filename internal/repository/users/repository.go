@@ -1,4 +1,4 @@
-package teams
+package users
 
 import (
 	"errors"
@@ -7,8 +7,7 @@ import (
 )
 
 var (
-	ErrTeamAlreadyExists = errors.New("team already exists")
-	ErrTeamNotFound      = errors.New("team not found")
+	ErrUserNotFound = errors.New("user not found")
 )
 
 type Repository struct {

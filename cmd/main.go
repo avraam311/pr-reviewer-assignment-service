@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"os/signal"
 	"syscall"
 	"time"
@@ -13,6 +14,7 @@ import (
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/infra/logger"
 	repositoryTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/repository/teams"
 	serviceTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/usecase/teams"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 const (
@@ -34,7 +36,27 @@ func main() {
 		logger.Logger.Fatal().Err(err).Msg("failed to load config file")
 	}
 
-	repoTeams, err := repositoryTeams.New(cfg)
+	dsn := fmt.Sprintf(
+		"host=%s port=%d user=%s password=%s dbname=%s sslmode=%s",
+		cfg.GetString("DB_HOST"), cfg.GetInt("DB_PORT"), cfg.GetString("DB_USER"),
+		cfg.GetString("DB_PASSWORD"), cfg.GetString("DB_NAME"), cfg.GetString("DB_SSL_MODE"),
+	)
+	poolConfig, err := pgxpool.ParseConfig(dsn)
+	if err != nil {
+		logger.Logger.Fatal().Err(err).Msg("failed to parse pgxpool dsn")
+	}
+	poolConfig.MaxConns = cfg.GetInt32("db.max_conns")
+	poolConfig.MaxConnLifetime = cfg.GetDuration("db.max_conn_lifetime")
+	pool, err := pgxpool.NewWithConfig(context.Background(), poolConfig)
+	if err != nil {
+		logger.Logger.Fatal().Err(err).Msg("failed to init pgxpool")
+	}
+	if err := pool.Ping(context.Background()); err != nil {
+		pool.Close()
+		logger.Logger.Fatal().Err(err).Msg("failed to init pgxpool")
+	}
+
+	repoTeams := repositoryTeams.New(pool)
 	if err != nil {
 		logger.Logger.Fatal().Err(err).Msg("failed to init teams repo")
 	}
