@@ -10,6 +10,10 @@ RUN go build -o app ./cmd/main.go
 
 FROM alpine AS runner
 
+WORKDIR /app
+
+RUN mkdir -p /app/logs
+
 COPY --from=build_base ./app .
 COPY ./config ./config
 COPY ./.env .

@@ -13,6 +13,8 @@ services:
         condition: service_completed_successfully
     networks:
       - app-network
+    volumes:
+      - ./logs:/app/logs
 
   db:
     image: postgres
