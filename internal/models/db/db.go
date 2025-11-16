@@ -30,3 +30,10 @@ type PRWithReplacedBy struct {
 	PR         *PR    `json:"pr" db:"pr" binding:"required"`
 	ReplacedBy string `json:"replaced_by" db:"replaced_by" binding:"required"`
 }
+
+type PRShort struct {
+	PRID     string `json:"pull_request_id" db:"pull_request_id" binding:"required"`
+	PRName   string `json:"pull_request_name" db:"pull_request_name" binding:"required"`
+	AuthorID string `json:"author_id" db:"author_id" binding:"required"`
+	Status   string `json:"status" db:"status" binding:"required"`
+}

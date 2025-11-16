@@ -9,6 +9,7 @@ import (
 
 type Service interface {
 	SetIsActive(context.Context, *dto.UserWithIsActive) (*db.User, error)
+	GetReviews(context.Context, string) ([]*db.PRShort, error)
 }
 
 type Handler struct {

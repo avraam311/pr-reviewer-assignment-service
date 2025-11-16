@@ -9,6 +9,7 @@ import (
 
 type Repository interface {
 	UpdateUserIsActive(context.Context, *dto.UserWithIsActive) (*db.User, error)
+	GetReviews(context.Context, string) ([]*db.PRShort, error)
 }
 
 type Service struct {

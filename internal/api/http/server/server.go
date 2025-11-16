@@ -22,6 +22,7 @@ func NewRouter(cfg *config.Config, handlerTeam *teams.Handler, handlerUser *user
 	usersGroup := api.Group("/users")
 	{
 		usersGroup.POST("/setIsActive", handlerUser.SetIsActive)
+		usersGroup.GET("/getReview/:user_id", handlerUser.GetReviews)
 	}
 	prGroup := api.Group("/pullRequest")
 	{
