@@ -308,3 +308,6 @@ goose -dir migrations postgres "user=your_user password=your_pass dbname=your_db
 # Применение миграций
 goose -dir migrations postgres "user=your_user password=your_pass dbname=your_db sslmode=disable" up
 ```
+### Добавлена конфигурация линтера .golangci.yml
+
+### Нагрузочное тестирование: В среднем 1 запрос выполняется за 3-5 мс в Postman
