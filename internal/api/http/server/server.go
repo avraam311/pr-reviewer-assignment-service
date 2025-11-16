@@ -19,6 +19,7 @@ func NewRouter(cfg *config.Config, handlerTeam *teams.Handler, handlerUser *user
 	{
 		teamGroup.POST("/add", handlerTeam.AddTeam)
 		teamGroup.GET("/get/:team_name", handlerTeam.GetTeam)
+		teamGroup.POST("/deactivateTeamUsers/:team_name", handlerTeam.DeactivateTeamUsers)
 	}
 	usersGroup := api.Group("/users")
 	{

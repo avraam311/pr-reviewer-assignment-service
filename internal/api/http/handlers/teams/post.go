@@ -35,3 +35,22 @@ func (h *Handler) AddTeam(c *gin.Context) {
 
 	responses.ResponseCreated(c, team)
 }
+
+func (h *Handler) DeactivateTeamUsers(c *gin.Context) {
+	teamName := c.Param("team_name")
+
+	err := h.service.DeactivateTeamUsers(c.Request.Context(), teamName)
+	if err != nil {
+		if errors.Is(err, teams.ErrTeamNotFound) {
+			logger.Logger.Error().Err(err).Interface("team_name", teamName).Msg("team not found")
+			responses.ResponseError(c, responses.ErrCodeNotFound, "team not found", http.StatusBadRequest)
+			return
+		}
+
+		logger.Logger.Error().Err(err).Interface("team_name", teamName).Msg("failed to deactivate team users")
+		responses.ResponseError(c, responses.ErrInternalServer, "internal server error", http.StatusInternalServerError)
+		return
+	}
+
+	responses.ResponseCreated(c, "team users deactivated")
+}

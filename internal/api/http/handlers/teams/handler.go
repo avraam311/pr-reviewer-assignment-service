@@ -9,6 +9,7 @@ import (
 type Service interface {
 	AddTeam(context.Context, *dto.Team) error
 	GetTeam(context.Context, string) (*dto.Team, error)
+	DeactivateTeamUsers(context.Context, string) error
 }
 
 type Handler struct {

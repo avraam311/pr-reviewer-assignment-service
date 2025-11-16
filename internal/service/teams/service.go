@@ -9,6 +9,7 @@ import (
 type Repository interface {
 	CreateTeam(context.Context, *dto.Team) error
 	GetTeam(context.Context, string) (*dto.Team, error)
+	DeactivateTeamUsers(context.Context, string) error
 }
 
 type Service struct {
