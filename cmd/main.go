@@ -8,13 +8,16 @@ import (
 	"syscall"
 	"time"
 
+	handlerPR "github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers/pr"
 	handlerTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers/teams"
 	handlerUsers "github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers/users"
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/server"
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/infra/config"
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/infra/logger"
+	repositoryPR "github.com/avraam311/pr-reviewer-assignment-service/internal/repository/pr"
 	repositoryTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/repository/teams"
 	repositoryUsers "github.com/avraam311/pr-reviewer-assignment-service/internal/repository/users"
+	servicePR "github.com/avraam311/pr-reviewer-assignment-service/internal/service/pr"
 	serviceTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/service/teams"
 	serviceUsers "github.com/avraam311/pr-reviewer-assignment-service/internal/service/users"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -65,8 +68,11 @@ func main() {
 	repoUsers := repositoryUsers.New(pool)
 	srvcUsers := serviceUsers.New(repoUsers)
 	handUsers := handlerUsers.New(srvcUsers)
+	repoPR := repositoryPR.New(pool)
+	srvcPR := servicePR.New(repoPR)
+	handPR := handlerPR.New(srvcPR)
 
-	router := server.NewRouter(cfg, handTeams, handUsers)
+	router := server.NewRouter(cfg, handTeams, handUsers, handPR)
 	srv := server.NewServer(cfg.GetString("server.port"), router)
 	go func() {
 		if err := srv.ListenAndServe(); err != nil {
