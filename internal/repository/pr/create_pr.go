@@ -26,18 +26,18 @@ func (r *Repository) CreatePR(ctx context.Context, pr *dto.PR) (*db.PR, error) {
 		return nil, ErrAuthorNotFound
 	}
 	if err != nil {
-		return nil, fmt.Errorf("repository/create_pr.go - failed to get author team_name: %w", err)
+		return nil, fmt.Errorf("repository/create_pr.go - failed to get author team_nam - %w", err)
 	}
 
 	queryCheckPR := `
 		SELECT 1 
 		FROM pull_request 
-		WHERE pull_request_id = $1
+		WHERE pull_request_id = $1 OR pull_request_name = $2
 	`
 	var exists int
-	err = r.db.QueryRow(ctx, queryCheckPR, pr.PRID).Scan(&exists)
+	err = r.db.QueryRow(ctx, queryCheckPR, pr.PRID, pr.PRName).Scan(&exists)
 	if err != nil && err != pgx.ErrNoRows {
-		return nil, fmt.Errorf("repository/create_pr.go - failed to check pr existence: %w", err)
+		return nil, fmt.Errorf("repository/create_pr.go - failed to check pr existence - %w", err)
 	}
 	if exists == 1 {
 		return nil, ErrPRAlreadyExists
@@ -52,7 +52,7 @@ func (r *Repository) CreatePR(ctx context.Context, pr *dto.PR) (*db.PR, error) {
     `
 	rows, err := r.db.Query(ctx, queryReviewers, teamName, pr.AuthorID, userIsActiveTrue)
 	if err != nil {
-		return nil, fmt.Errorf("repository/create_pr.go - failed to get reviewers: %w", err)
+		return nil, fmt.Errorf("repository/create_pr.go - failed to get reviewers - %w", err)
 	}
 	defer rows.Close()
 
@@ -60,12 +60,12 @@ func (r *Repository) CreatePR(ctx context.Context, pr *dto.PR) (*db.PR, error) {
 	for rows.Next() {
 		var reviewerID string
 		if err := rows.Scan(&reviewerID); err != nil {
-			return nil, fmt.Errorf("repository/create_pr.go - failed to scan reviewer id: %w", err)
+			return nil, fmt.Errorf("repository/create_pr.go - failed to scan reviewer id - %w", err)
 		}
 		assigned = append(assigned, reviewerID)
 	}
 	if err = rows.Err(); err != nil {
-		return nil, fmt.Errorf("repository/create_pr.go - error iterating reviewers: %w", err)
+		return nil, fmt.Errorf("repository/create_pr.go - error iterating reviewers - %w", err)
 	}
 
 	queryPR := `
@@ -78,7 +78,7 @@ func (r *Repository) CreatePR(ctx context.Context, pr *dto.PR) (*db.PR, error) {
 		&createdPR.PRID, &createdPR.PRName, &createdPR.AuthorID, &createdPR.Status, &createdPR.AssignedReviewers,
 	)
 	if err != nil {
-		return nil, fmt.Errorf("repository/create_pr.go - failed to insert pull request: %w", err)
+		return nil, fmt.Errorf("repository/create_pr.go - failed to insert pull request - %w", err)
 	}
 
 	return &createdPR, nil

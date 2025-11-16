@@ -16,6 +16,8 @@ var (
 	ErrPRNotFound          = errors.New("pr not found")
 	ErrPROrOldUserNotFound = errors.New("pr or old user not found")
 	ErrReassignAfterMerge  = errors.New("reassign after merge")
+	ErrReviewerNotAssigned = errors.New("reviewer not assigned")
+	ErrNoCandidate         = errors.New("no candidate to reassign")
 )
 
 type Repository struct {

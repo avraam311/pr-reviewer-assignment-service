@@ -43,12 +43,12 @@ func (r *Repository) MergePR(ctx context.Context, pr *dto.PRWithPRID) (*db.PRWit
 			return nil, ErrPRNotFound
 		}
 		if err != nil {
-			return nil, fmt.Errorf("repository/merge_pr.go - failed to fetch pull request after merge conflict: %w", err)
+			return nil, fmt.Errorf("repository/merge_pr.go - failed to fetch pull request after merge conflict - %w", err)
 		}
 		return &updatedPR, nil
 	}
 	if err != nil {
-		return nil, fmt.Errorf("repository/merge_pr.go - failed to merge pull request: %w", err)
+		return nil, fmt.Errorf("repository/merge_pr.go - failed to merge pull request - %w", err)
 	}
 	return &updatedPR, nil
 }
