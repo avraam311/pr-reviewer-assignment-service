@@ -246,6 +246,34 @@ CREATE TABLE pull_request (
 make lint
 ```
 
+## Тестирование
+
+### Интеграционные тесты
+Сервис включает простые интеграционные тесты для основных эндпоинтов API. Тесты написаны на Go и отправляют HTTP-запросы к запущенному сервису.
+
+#### Запуск интеграционных тестов
+```bash
+# Запуск сервиса в фоне
+make up
+
+# В отдельном терминале запуск тестов
+make test-integration
+
+# Или напрямую
+go run test_integration.go
+
+# Остановка сервиса
+make down
+```
+
+Тесты проверяют следующие эндпоинты:
+- Создание команды (`POST /api/v1/team/add`)
+- Получение команды (`GET /api/v1/team/get/:team_name`)
+- Установка активности пользователя (`POST /api/v1/users/setIsActive`)
+- Создание PR (`POST /api/v1/pullRequest/create`)
+- Получение отзывов пользователя (`GET /api/v1/users/getReview/:user_id`)
+- Получение статистики (`GET /api/v1/statistics/getPRsForUser/:user_id`)
+
 ## Мониторинг и логи
 
 ### Логи приложения

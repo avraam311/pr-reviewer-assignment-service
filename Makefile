@@ -1,4 +1,4 @@
-.PHONY: lint, up, buildup, down
+.PHONY: lint, up, buildup, down, test-integration
 
 lint:
 	go vet ./...
@@ -12,3 +12,6 @@ buildup:
 
 down:
 	docker compose down -v
+
+test-integration:
+	go run test_integration.go

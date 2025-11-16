@@ -27,6 +27,7 @@ func (r *Repository) GetStatistics(ctx context.Context, userID string) (*db.Stat
 	var assignedCount int
 	err = r.db.QueryRow(ctx, query, userID).Scan(&assignedCount)
 	if err != nil {
+		return nil, fmt.Errorf("repository/get_statistics.go - failed to scan assigned count - %w", err)
 	}
 
 	stats := &db.Statistics{
