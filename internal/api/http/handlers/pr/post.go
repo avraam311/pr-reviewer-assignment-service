@@ -23,12 +23,12 @@ func (h *Handler) CreatePR(c *gin.Context) {
 	prResp, err := h.service.CreatePR(c.Request.Context(), &pr)
 	if err != nil {
 		if errors.Is(err, prRepo.ErrAuthorNotFound) {
-			logger.Logger.Error().Err(err).Interface("pr", pr).Msg("pr.author_id not found")
-			responses.ResponseError(c, responses.ErrCodeNotFound, "pr.author_id not found", http.StatusBadRequest)
+			logger.Logger.Error().Err(err).Interface("pr", pr).Msg("author not found")
+			responses.ResponseError(c, responses.ErrCodeNotFound, "author not found", http.StatusBadRequest)
 			return
 		} else if errors.Is(err, prRepo.ErrPRAlreadyExists) {
-			logger.Logger.Error().Err(err).Interface("pr", pr).Msg("pr.pull_request_id or pr.pull_request_name already exists")
-			responses.ResponseError(c, responses.ErrCodePrExists, "pr.pull_request_id or pr.pull_request_name already exists", http.StatusConflict)
+			logger.Logger.Error().Err(err).Interface("pr", pr).Msg("pull_request already exists")
+			responses.ResponseError(c, responses.ErrCodePrExists, "pull_request already exists", http.StatusConflict)
 			return
 		}
 
@@ -51,8 +51,8 @@ func (h *Handler) MergePR(c *gin.Context) {
 	prResp, err := h.service.MergePR(c.Request.Context(), &pr)
 	if err != nil {
 		if errors.Is(err, prRepo.ErrPRNotFound) {
-			logger.Logger.Error().Err(err).Interface("pr", pr).Msg("pr.pull_request_id not found")
-			responses.ResponseError(c, responses.ErrCodeNotFound, "pr.pull_request_id not found", http.StatusBadRequest)
+			logger.Logger.Error().Err(err).Interface("pr", pr).Msg("pull_request not found")
+			responses.ResponseError(c, responses.ErrCodeNotFound, "pull_request not found", http.StatusBadRequest)
 			return
 		}
 
@@ -75,8 +75,8 @@ func (h *Handler) ReassignPR(c *gin.Context) {
 	prResp, err := h.service.ReassignPR(c.Request.Context(), &pr)
 	if err != nil {
 		if errors.Is(err, prRepo.ErrPROrOldUserNotFound) {
-			logger.Logger.Error().Err(err).Interface("pr", pr).Msg("pr.pull_request_id or pr.old_user_id not found")
-			responses.ResponseError(c, responses.ErrCodeNotFound, "pr.pull_request_id or pr.old_user_id not found", http.StatusBadRequest)
+			logger.Logger.Error().Err(err).Interface("pr", pr).Msg("pull_request or old_user not found")
+			responses.ResponseError(c, responses.ErrCodeNotFound, "pull_request or old_user not found", http.StatusBadRequest)
 			return
 		} else if errors.Is(err, prRepo.ErrReassignAfterMerge) {
 			logger.Logger.Error().Err(err).Interface("pr", pr).Msg("pr already merged")

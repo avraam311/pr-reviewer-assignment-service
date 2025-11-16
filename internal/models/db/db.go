@@ -37,3 +37,8 @@ type PRShort struct {
 	AuthorID string `json:"author_id" db:"author_id" binding:"required"`
 	Status   string `json:"status" db:"status" binding:"required"`
 }
+
+type Statistics struct {
+	UserID          string `json:"user_id" db:"user_id" binding:"required"`
+	AssignmentCount int    `json:"assignment_count" db:"assignment_count" binding:"required"`
+}

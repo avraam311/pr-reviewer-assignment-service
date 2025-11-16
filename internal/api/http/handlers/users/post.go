@@ -23,8 +23,8 @@ func (h *Handler) SetIsActive(c *gin.Context) {
 	user, err := h.service.SetIsActive(c.Request.Context(), &usr)
 	if err != nil {
 		if errors.Is(err, users.ErrUserNotFound) {
-			logger.Logger.Error().Err(err).Interface("user", usr).Msg("user.id not found")
-			responses.ResponseError(c, responses.ErrCodeNotFound, "user.id not found", http.StatusBadRequest)
+			logger.Logger.Error().Err(err).Interface("user", usr).Msg("user not found")
+			responses.ResponseError(c, responses.ErrCodeNotFound, "user not found", http.StatusBadRequest)
 			return
 		}
 

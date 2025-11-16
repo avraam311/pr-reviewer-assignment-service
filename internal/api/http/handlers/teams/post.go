@@ -23,8 +23,8 @@ func (h *Handler) AddTeam(c *gin.Context) {
 	err := h.service.AddTeam(c.Request.Context(), &team)
 	if err != nil {
 		if errors.Is(err, teams.ErrTeamAlreadyExists) {
-			logger.Logger.Error().Err(err).Interface("team", team).Msg("team.team_name already exists")
-			responses.ResponseError(c, responses.ErrCodeTeamExists, "team.team_name already exists", http.StatusBadRequest)
+			logger.Logger.Error().Err(err).Interface("team", team).Msg("team already exists")
+			responses.ResponseError(c, responses.ErrCodeTeamExists, "team already exists", http.StatusBadRequest)
 			return
 		}
 

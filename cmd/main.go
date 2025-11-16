@@ -9,15 +9,18 @@ import (
 	"time"
 
 	handlerPR "github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers/pr"
+	handlerStats "github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers/statistics"
 	handlerTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers/teams"
 	handlerUsers "github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/handlers/users"
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/api/http/server"
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/infra/config"
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/infra/logger"
 	repositoryPR "github.com/avraam311/pr-reviewer-assignment-service/internal/repository/pr"
+	repositoryStats "github.com/avraam311/pr-reviewer-assignment-service/internal/repository/statistics"
 	repositoryTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/repository/teams"
 	repositoryUsers "github.com/avraam311/pr-reviewer-assignment-service/internal/repository/users"
 	servicePR "github.com/avraam311/pr-reviewer-assignment-service/internal/service/pr"
+	serviceStats "github.com/avraam311/pr-reviewer-assignment-service/internal/service/statistics"
 	serviceTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/service/teams"
 	serviceUsers "github.com/avraam311/pr-reviewer-assignment-service/internal/service/users"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -71,8 +74,11 @@ func main() {
 	repoPR := repositoryPR.New(pool)
 	srvcPR := servicePR.New(repoPR)
 	handPR := handlerPR.New(srvcPR)
+	repoStats := repositoryStats.New(pool)
+	srvcStats := serviceStats.New(repoStats)
+	handStats := handlerStats.New(srvcStats)
 
-	router := server.NewRouter(cfg, handTeams, handUsers, handPR)
+	router := server.NewRouter(cfg, handTeams, handUsers, handPR, handStats)
 	srv := server.NewServer(cfg.GetString("server.port"), router)
 	go func() {
 		if err := srv.ListenAndServe(); err != nil {
