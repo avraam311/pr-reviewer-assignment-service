@@ -13,7 +13,7 @@ type PR struct {
 	PRID              string   `json:"pull_request_id" db:"pull_request_id" binding:"required"`
 	PRName            string   `json:"pull_request_name" db:"pull_request_name" binding:"required"`
 	AuthorID          string   `json:"author_id" db:"author_id" binding:"required"`
-	Stauts            string   `json:"status" db:"status" binding:"required"`
+	Status            string   `json:"status" db:"status" binding:"required"`
 	AssignedReviewers []string `json:"assigned_reviewers" db:"assigned_reviewers" binding:"required"`
 }
 
@@ -21,9 +21,9 @@ type PRWithMergedAt struct {
 	PRID              string    `json:"pull_request_id" db:"pull_request_id" binding:"required"`
 	PRName            string    `json:"pull_request_name" db:"pull_request_name" binding:"required"`
 	AuthorID          string    `json:"author_id" db:"author_id" binding:"required"`
-	Stauts            string    `json:"status" db:"status" binding:"required"`
+	Status            string    `json:"status" db:"status" binding:"required"`
 	AssignedReviewers []string  `json:"assigned_reviewers" db:"assigned_reviewers" binding:"required"`
-	MergetAt          time.Time `json:"merged_at" db:"merged_at" binding:"required"`
+	MergedAt          time.Time `json:"merged_at" db:"merged_at" binding:"required"`
 }
 
 type PRWithReplacedBy struct {
