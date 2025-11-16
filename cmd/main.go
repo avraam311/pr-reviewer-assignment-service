@@ -15,8 +15,8 @@ import (
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/infra/logger"
 	repositoryTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/repository/teams"
 	repositoryUsers "github.com/avraam311/pr-reviewer-assignment-service/internal/repository/users"
-	serviceTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/usecase/teams"
-	serviceUsers "github.com/avraam311/pr-reviewer-assignment-service/internal/usecase/users"
+	serviceTeams "github.com/avraam311/pr-reviewer-assignment-service/internal/service/teams"
+	serviceUsers "github.com/avraam311/pr-reviewer-assignment-service/internal/service/users"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 

@@ -8,7 +8,7 @@ import (
 )
 
 func (s *Service) GetTeam(ctx context.Context, teamName string) (*dto.Team, error) {
-	team, err := s.repo.SelectTeam(ctx, teamName)
+	team, err := s.repo.GetTeam(ctx, teamName)
 	if err != nil {
 		return nil, fmt.Errorf("service/get_team.go - %w", err)
 	}

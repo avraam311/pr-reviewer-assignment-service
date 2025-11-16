@@ -9,7 +9,7 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 )
 
-func (r *Repository) InsertTeam(ctx context.Context, team *dto.Team) error {
+func (r *Repository) CreateTeam(ctx context.Context, team *dto.Team) error {
 	tx, err := r.db.Begin(ctx)
 	if err != nil {
 		return fmt.Errorf("repository/insert_team.go - failed to begin transaction - %w", err)

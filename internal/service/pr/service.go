@@ -1,4 +1,4 @@
-package users
+package pr
 
 import (
 	"context"
@@ -8,7 +8,9 @@ import (
 )
 
 type Repository interface {
-	UpdateUser(context.Context, *dto.UserWithIsActive) (*db.User, error)
+	CreatePR(context.Context, *dto.PR) (*db.PR, error)
+	MergePR(context.Context, *dto.PRWithPRID) (*db.PRWithMergedAt, error)
+	ReassignPRReviewer(context.Context, *dto.PRWithOldUserID) (*db.PRWithReplacedBy, error)
 }
 
 type Service struct {

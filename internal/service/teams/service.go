@@ -7,8 +7,8 @@ import (
 )
 
 type Repository interface {
-	InsertTeam(context.Context, *dto.Team) error
-	SelectTeam(context.Context, string) (*dto.Team, error)
+	CreateTeam(context.Context, *dto.Team) error
+	GetTeam(context.Context, string) (*dto.Team, error)
 }
 
 type Service struct {

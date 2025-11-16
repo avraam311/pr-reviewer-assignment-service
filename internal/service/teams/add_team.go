@@ -8,7 +8,7 @@ import (
 )
 
 func (s *Service) AddTeam(ctx context.Context, team *dto.Team) error {
-	err := s.repo.InsertTeam(ctx, team)
+	err := s.repo.CreateTeam(ctx, team)
 	if err != nil {
 		return fmt.Errorf("service/add_team.go - %w", err)
 	}

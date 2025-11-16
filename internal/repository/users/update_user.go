@@ -8,7 +8,7 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-func (r *Repository) UpdateUser(ctx context.Context, usr *dto.UserWithIsActive) (*db.User, error) {
+func (r *Repository) UpdateUserIsActive(ctx context.Context, usr *dto.UserWithIsActive) (*db.User, error) {
 	query := `
         UPDATE "user"
         SET is_active = $1

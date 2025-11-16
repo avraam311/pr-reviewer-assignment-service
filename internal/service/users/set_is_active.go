@@ -9,7 +9,7 @@ import (
 )
 
 func (s *Service) SetIsActive(ctx context.Context, usr *dto.UserWithIsActive) (*db.User, error) {
-	user, err := s.repo.UpdateUser(ctx, usr)
+	user, err := s.repo.UpdateUserIsActive(ctx, usr)
 	if err != nil {
 		return nil, fmt.Errorf("service/set_is_active.go - %w", err)
 	}

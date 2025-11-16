@@ -7,7 +7,7 @@ import (
 	"github.com/avraam311/pr-reviewer-assignment-service/internal/models/dto"
 )
 
-func (r *Repository) SelectTeam(ctx context.Context, teamName string) (*dto.Team, error) {
+func (r *Repository) GetTeam(ctx context.Context, teamName string) (*dto.Team, error) {
 	query := `
         SELECT t.team_name, u.user_id, u.username, u.is_active
         FROM team t
