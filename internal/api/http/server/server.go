@@ -14,25 +14,24 @@ import (
 func NewRouter(cfg *config.Config, handlerTeam *teams.Handler, handlerUser *users.Handler, handlerPR *pr.Handler, handlerStats *statistics.Handler) *gin.Engine {
 	e := gin.Default()
 
-	api := e.Group("/api/v1")
-	teamGroup := api.Group("/team")
+	teamGroup := e.Group("/team")
 	{
 		teamGroup.POST("/add", handlerTeam.AddTeam)
 		teamGroup.GET("/get/:team_name", handlerTeam.GetTeam)
 		teamGroup.POST("/deactivateTeamUsers/:team_name", handlerTeam.DeactivateTeamUsers)
 	}
-	usersGroup := api.Group("/users")
+	usersGroup := e.Group("/users")
 	{
 		usersGroup.POST("/setIsActive", handlerUser.SetIsActive)
 		usersGroup.GET("/getReview/:user_id", handlerUser.GetReviews)
 	}
-	prGroup := api.Group("/pullRequest")
+	prGroup := e.Group("/pullRequest")
 	{
 		prGroup.POST("/create", handlerPR.CreatePR)
 		prGroup.POST("/merge", handlerPR.MergePR)
 		prGroup.POST("/reassign", handlerPR.ReassignPR)
 	}
-	statsGroup := api.Group("/statistics")
+	statsGroup := e.Group("/statistics")
 	{
 		statsGroup.GET("/getPRsForUser/:user_id", handlerStats.GetStatistics)
 	}
