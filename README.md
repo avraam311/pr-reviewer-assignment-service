@@ -133,38 +133,38 @@ go run cmd/main.go
 
 ## Документация API
 
-API имеет версионирование под `/api/v1` и предоставляет следующие endpoints:
+API предоставляет следующие endpoints:
 
 ### Управление командами
 | Метод | Endpoint | Описание |
 |-------|----------|----------|
-| `POST` | `/api/v1/team/add` | Создание новой команды |
-| `GET` | `/api/v1/team/get/:team_name` | Получение деталей команды и участников |
-| `POST` | `/api/v1/team/deactivateTeamUsers/:team_name` | Деактивация всех пользователей в команде |
+| `POST` | `/team/add` | Создание новой команды |
+| `GET` | `/team/get/:team_name` | Получение деталей команды и участников |
+| `POST` | `/team/deactivateTeamUsers/:team_name` | Деактивация всех пользователей в команде |
 
 ### Управление пользователями
 | Метод | Endpoint | Описание |
 |-------|----------|----------|
-| `POST` | `/api/v1/users/setIsActive` | Установка статуса активен/неактивен для пользователя |
-| `GET` | `/api/v1/users/getReview/:user_id` | Получение назначенных PR пользователя |
+| `POST` | `/users/setIsActive` | Установка статуса активен/неактивен для пользователя |
+| `GET` | `/users/getReview/:user_id` | Получение назначенных PR пользователя |
 
 ### Управление Pull Request'ами
 | Метод | Endpoint | Описание |
 |-------|----------|----------|
-| `POST` | `/api/v1/pullRequest/create` | Создание нового PR с назначенными рецензентами |
-| `POST` | `/api/v1/pullRequest/merge` | Отметка PR как слитого |
-| `POST` | `/api/v1/pullRequest/reassign` | Переназначение рецензента для PR |
+| `POST` | `/pullRequest/create` | Создание нового PR с назначенными рецензентами |
+| `POST` | `/pullRequest/merge` | Отметка PR как слитого |
+| `POST` | `/pullRequest/reassign` | Переназначение рецензента для PR |
 
 ### Статистика
 | Метод | Endpoint | Описание |
 |-------|----------|----------|
-| `GET` | `/api/v1/statistics/getPRsForUser/:user_id` | Получение статистики назначений для пользователя |
+| `GET` | `/statistics/getPRsForUser/:user_id` | Получение статистики назначений для пользователя |
 
 ### Примеры запросов/ответов
 
 #### Создание команды
 ```bash
-POST /api/v1/team/add
+POST /team/add
 Content-Type: application/json
 
 {
@@ -181,7 +181,7 @@ Content-Type: application/json
 
 #### Создание PR
 ```bash
-POST /api/v1/pullRequest/create
+POST /pullRequest/create
 Content-Type: application/json
 
 {
@@ -193,7 +193,7 @@ Content-Type: application/json
 
 #### Получение статистики
 ```bash
-GET /api/v1/statistics/getPRsForUser/user123
+GET /statistics/getPRsForUser/user123
 ```
 
 Ответ:
@@ -267,12 +267,12 @@ make down
 ```
 
 Тесты проверяют следующие эндпоинты:
-- Создание команды (`POST /api/v1/team/add`)
-- Получение команды (`GET /api/v1/team/get/:team_name`)
-- Установка активности пользователя (`POST /api/v1/users/setIsActive`)
-- Создание PR (`POST /api/v1/pullRequest/create`)
-- Получение отзывов пользователя (`GET /api/v1/users/getReview/:user_id`)
-- Получение статистики (`GET /api/v1/statistics/getPRsForUser/:user_id`)
+- Создание команды (`POST /team/add`)
+- Получение команды (`GET /team/get/:team_name`)
+- Установка активности пользователя (`POST /users/setIsActive`)
+- Создание PR (`POST /pullRequest/create`)
+- Получение отзывов пользователя (`GET /users/getReview/:user_id`)
+- Получение статистики (`GET /statistics/getPRsForUser/:user_id`)
 
 ## Мониторинг и логи
 
